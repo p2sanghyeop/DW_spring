@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.first_spring.controller.vo.UserVO;
 import com.example.first_spring.service.MainService;
+import com.example.first_spring.vo.UserVO;
 @RestController
 public class mainController {
 	

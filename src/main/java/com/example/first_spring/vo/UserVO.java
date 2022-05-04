@@ -1,4 +1,4 @@
-package com.example.first_spring.controller.vo;
+package com.example.first_spring.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

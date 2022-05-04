@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.first_spring.controller.vo.UserVO;
+import com.example.first_spring.vo.UserVO;
 
 @Service
 
