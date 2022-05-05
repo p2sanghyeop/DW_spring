@@ -1,5 +1,4 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- mybatis에 mapper경로를 적어야 한다 -->
 <mapper namespace="com.example.first_spring.mapper.DeptMapper">
 	<select id="getDeptList" resultType="DeptVO">
 		SELECT
