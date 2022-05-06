@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- mybatis에 mapper경로를 적어야 한다 -->
-<mapper namespace="com.example.first_spring.mapper.MainMapper">
+<mapper namespace="com.example.first_spring.mapper.EmpMapper">
 	<select id="getEmpList" resultType="EmpVO">
 		SELECT
 			empno,
@@ -12,6 +12,68 @@
 		SELECT
 			ename
 		FROM emp
-		Where empno = 7499	
+		Where empno = #{empNo}
+	</select>
+	<select id="getName" resultType="EmpVO">
+		SELECT
+			ename,
+			job
+		FROM emp
+		where ename like "%L%L%"
+	</select><select id="getComm" resultType="EmpVO">
+		select
+			ename,
+			comm
+		from emp
+		where comm is null
+	</select>
+	<select id="getHiredate" resultType="EmpVO">
+	<![CDATA[
+	select 
+			ename,
+			hiredate
+		from emp
+		where HIREDATE > '1980-12-17' and HIREDATE < '1982-01-23'
+	]]>
+		
+	</select>
+	<select id="getSal" resultType="EmpVO">
+	<![CDATA[
+		select
+			ename
+		from emp
+		where job = #{jobName} and sal > #{sal}
+		]]>
+	</select>
+	<select id="getOverSal" resultType="EmpVO">
+	select
+		ename,
+		sal
+	from emp
+	where (DEPTNO = 10 or DEPTNO = 30) and sal > #{sal}
+	</select>
+	<select id="getMgr" resultType="EmpVO">
+	select 
+		ename,
+		job,
+		sal
+	from emp
+	where mgr is null
+	</select>
+	<select id="getOverHiredate" resultType="EmpVO">
+	select 
+		ename,
+		job,
+		hiredate,
+		sal
+	from emp
+	where date_format(hiredate, '%Y') = #{year}
+	</select>
+	<select id="getMonth12" resultType="EmpVO">
+	select 
+		ename,
+		sal
+	from emp
+	where date_format(hiredate, '%m') = #{month}
 	</select>
 </mapper>

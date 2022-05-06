@@ -7,4 +7,7 @@ public class EmpVO {
 	private int empno;
 	private String ename;
 	private String job;
+	private String hiredate;
+	private int comm;
+	private int sal;
 }
