@@ -76,4 +76,13 @@
 	from emp
 	where date_format(hiredate, '%m') = #{month}
 	</select>
+	<select id="getJob" resultType="EmpVO">
+	select 
+		ename,
+		hiredate,
+		sal
+	from emp 
+	where job = #{jobName}
+	limit 1
+	</select>
 </mapper>

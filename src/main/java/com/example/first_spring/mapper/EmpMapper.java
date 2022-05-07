@@ -20,4 +20,5 @@ public interface EmpMapper {
 	public List<EmpVO> getMgr();
 	public List<EmpVO> getOverHiredate(String year);
 	public List<EmpVO> getMonth12(String month);
+	public List<EmpVO> getJob(String jobName);
 }

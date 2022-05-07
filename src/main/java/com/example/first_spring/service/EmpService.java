@@ -48,8 +48,12 @@ public class EmpService {
 		for(int i=0; i<empmapper.getMonth12(month).size(); ++i) {
 			if(empmapper.getMonth12(month).get(i).getSal() > max) {
 				max = empmapper.getMonth12(month).get(i).getSal();
+				empmapper.getMonth12(month).remove(i);
 			}
 		}
 		return empmapper.getMonth12(month);
+	}
+	public List<EmpVO> getJobList(String jobName){
+		return empmapper.getJob(jobName);
 	}
 }

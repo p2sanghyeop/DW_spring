@@ -58,4 +58,8 @@ public class EmpController {
 	public List<EmpVO> callMonth12(@PathVariable("month")String month){
 		return empservice.getMonth12List(month);
 	}
+	@GetMapping("/emp/job/{jobName}")
+	public List<EmpVO> calljob(@PathVariable("jobName")String jobName){
+		return empservice.getJobList(jobName);
+	}
 }
