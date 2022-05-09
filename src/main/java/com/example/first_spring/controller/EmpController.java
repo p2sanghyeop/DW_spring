@@ -3,8 +3,12 @@ package com.example.first_spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.first_spring.service.EmpService;
@@ -61,5 +65,27 @@ public class EmpController {
 	@GetMapping("/emp/job/{jobName}")
 	public List<EmpVO> calljob(@PathVariable("jobName")String jobName){
 		return empservice.getJobList(jobName);
+	}
+	//emp 테이블에 insert
+	//PostMapping : 중요한 정보를 보내거나 데이터를 많이 보낼때 post를 사용한다
+	//@RequestBody가 파라미터로 넘어오는 VO를 클래스 대신 new 해줌
+	@PostMapping("/emp")
+	public int callEmpSet(@RequestBody EmpVO empVO) {
+		System.out.println("사원이름"+empVO.getEname());
+		System.out.println("사원번호"+empVO.getEmpno());
+		System.out.println("직업"+empVO.getJob());
+		System.out.println("연봉"+empVO.getSal());
+		System.out.println("보너스"+empVO.getComm());
+		return empservice.setEmp(empVO);
+	}
+	//@deleteMapping : 자원 삭제시 사용
+	@DeleteMapping("/emp/empno/{empNo}")
+	public int callEmpRemove(@PathVariable("empNo")int empNo) {
+		return empservice.getEmpRemoveCount(empNo);
+	}
+	
+	@PatchMapping("/emp")
+	public int callEmpUpdate(@RequestBody EmpVO empVO) {
+		return empservice.getEmpUpdateCount(empVO);
 	}
 }

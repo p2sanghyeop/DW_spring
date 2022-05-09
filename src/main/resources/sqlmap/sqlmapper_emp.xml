@@ -40,9 +40,15 @@
 	<select id="getSal" resultType="EmpVO">
 	<![CDATA[
 		select
-			ename
+			empno,
+			ename,
+			job,
+			comm
 		from emp
-		where job = #{jobName} and sal > #{sal}
+		where 
+			job = #{jobName} 
+		and 
+			sal >= #{sal}
 		]]>
 	</select>
 	<select id="getOverSal" resultType="EmpVO">
@@ -85,4 +91,31 @@
 	where job = #{jobName}
 	limit 1
 	</select>
+	<!-- oracle은 mybatis insert 할때  PK 문법이 다름(시퀀스를 추가해야 함) -->
+	<insert id="insertEmp">
+	insert into emp
+	(
+		empno, 
+		ename,
+		deptno,
+		hiredate
+	)
+	values
+	(
+		#{empno},
+		#{ename},
+		#{deptno},
+		now()
+	)
+	</insert>
+	<delete id="deleteEmp">
+	delete from emp
+	where empno = #{empno}
+	</delete>
+	<update id="updateEmp">
+	update emp
+	set
+		comm = #{comm}
+	where empno = #{empno}
+	</update>
 </mapper>

@@ -16,5 +16,17 @@ public class DeptService {
 	public List<DeptVO> getAllDetpList(){
 		return deptmapper.getDeptList();
 	}
+	public int setDept(DeptVO deptVO) {
+		int rows = deptmapper.insertDept(deptVO);
+		return rows;
+	}
+	public int getRemoveDept(int deptNo) {
+		int rows = deptmapper.deleteDept(deptNo);
+		return rows;
+	}
+	public int getUpdateDept(DeptVO deptVO) {
+		int rows = deptmapper.updateDept(deptVO);
+		return rows;
+	}
 	
 }

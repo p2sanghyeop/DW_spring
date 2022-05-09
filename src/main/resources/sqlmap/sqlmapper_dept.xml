@@ -7,4 +7,26 @@
 			loc
 		FROM dept
 	</select>
+	<insert id="insertDept">
+	insert into dept
+	(
+		deptno,
+		dname
+	)
+	values
+	(
+		#{deptno},
+		#{dname}
+	)
+	</insert>
+	<delete id="deleteDept">
+	delete from dept
+	where deptno = #{deptno}
+	</delete>
+	<update id="updateDept">
+	update dept
+	set
+		loc = #{loc}
+	where deptno = #{deptno}
+	</update>
 </mapper>

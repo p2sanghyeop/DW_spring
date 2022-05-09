@@ -21,4 +21,7 @@ public interface EmpMapper {
 	public List<EmpVO> getOverHiredate(String year);
 	public List<EmpVO> getMonth12(String month);
 	public List<EmpVO> getJob(String jobName);
+	public int insertEmp(EmpVO empVO);//insert
+	public int deleteEmp(int empNo);//delete
+	public int updateEmp(EmpVO empVO);//update
 }

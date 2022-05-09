@@ -1,12 +1,15 @@
 package com.example.first_spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.first_spring.mapper.EmpMapper;
 import com.example.first_spring.vo.EmpVO;
+import com.example.first_spring.vo.UserVO;
 
 @Service
 public class EmpService {
@@ -32,7 +35,20 @@ public class EmpService {
 		if(jobName.equals("SALESMAN")) {
 			return null;
 		}
-		return empmapper.getSal(jobName, sal);
+		List<EmpVO> list = empmapper.getSal(jobName, sal);
+		int comm = 500;
+		int rows = 0;
+		for(int i=0; i<list.size(); ++i) {
+			int empComm = list.get(i).getComm();
+			int sum = empComm+comm;
+			list.get(i).setComm(sum);
+			EmpVO vo = list.get(i);
+			rows += empmapper.updateEmp(vo);
+		}
+		if(rows>0) {
+			return empmapper.getSal(jobName, sal);
+		}
+		return null;
 	}
 	public List<EmpVO> getOverSalList(int sal){
 		return empmapper.getOverSal(sal);
@@ -45,15 +61,37 @@ public class EmpService {
 	}
 	public List<EmpVO> getMonth12List(String month){
 		int max = 0;
-		for(int i=0; i<empmapper.getMonth12(month).size(); ++i) {
-			if(empmapper.getMonth12(month).get(i).getSal() > max) {
-				max = empmapper.getMonth12(month).get(i).getSal();
-				empmapper.getMonth12(month).remove(i);
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		list = empmapper.getMonth12(month);
+		for(int i=0; i<list.size(); ++i) {
+			if(list.get(i).getSal() > max) {
+				max = list.get(i).getSal();
 			}
+			list.remove(i);
+			i--;
 		}
-		return empmapper.getMonth12(month);
+		return list;
 	}
 	public List<EmpVO> getJobList(String jobName){
 		return empmapper.getJob(jobName);
+	}
+	@Transactional(rollbackFor = {Exception.class})
+	public int setEmp(EmpVO empVO) {
+		int rows = empmapper.insertEmp(empVO);//몇행 insert 되었는지 리턴
+		return rows;
+	}
+	@Transactional(rollbackFor = {Exception.class})
+	public int getEmpRemoveCount(int empNo) {
+		int rows = empmapper.deleteEmp(empNo);//몇행 delete 되었는지 리턴
+		return rows;
+	}
+	
+	@Transactional(rollbackFor = {Exception.class})
+	public int getEmpUpdateCount(EmpVO vo) {
+		int rows = empmapper.updateEmp(vo);//몇행 update 되었는지 리턴
+//		UserVO user = null;
+//		String name = user.getName();
+//		System.out.println(name);
+		return rows;
 	}
 }
