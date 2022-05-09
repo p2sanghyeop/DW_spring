@@ -66,9 +66,11 @@ public class EmpService {
 		for(int i=0; i<list.size(); ++i) {
 			if(list.get(i).getSal() > max) {
 				max = list.get(i).getSal();
+				if(i > 0) {
+					list.remove(i-1);
+					i--;
+				}
 			}
-			list.remove(i);
-			i--;
 		}
 		return list;
 	}
