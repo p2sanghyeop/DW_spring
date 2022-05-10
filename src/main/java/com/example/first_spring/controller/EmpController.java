@@ -85,7 +85,6 @@ public class EmpController {
 	public int callEmpRemove(@PathVariable("empNo")int empNo) {
 		return empservice.getEmpRemoveCount(empNo);
 	}
-	
 	@PatchMapping("/emp")
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
