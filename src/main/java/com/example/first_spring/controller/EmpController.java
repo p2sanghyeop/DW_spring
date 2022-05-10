@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.first_spring.service.EmpService;
@@ -71,13 +72,14 @@ public class EmpController {
 	//@RequestBody가 파라미터로 넘어오는 VO를 클래스 대신 new 해줌
 	@PostMapping("/emp")
 	public int callEmpSet(@RequestBody EmpVO empVO) {
-		System.out.println("사원이름"+empVO.getEname());
-		System.out.println("사원번호"+empVO.getEmpno());
-		System.out.println("직업"+empVO.getJob());
-		System.out.println("연봉"+empVO.getSal());
-		System.out.println("보너스"+empVO.getComm());
+		System.out.println("사원 번호는 "+empVO.getEmpno());
+		System.out.println("사원 이름은 "+empVO.getEname());
+		System.out.println("사원 부서번호는 "+empVO.getDeptno());
+		System.out.println("사원 급여는 "+empVO.getSal());
+		System.out.println("사원 직업은 "+empVO.getJob());
 		return empservice.setEmp(empVO);
 	}
+	
 	//@deleteMapping : 자원 삭제시 사용
 	@DeleteMapping("/emp/empno/{empNo}")
 	public int callEmpRemove(@PathVariable("empNo")int empNo) {
@@ -87,5 +89,25 @@ public class EmpController {
 	@PatchMapping("/emp")
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
+	}
+	//쿼리스트링으로 getmapping
+	//tier?region=kr
+	//검색할때 많이 사용
+	@GetMapping("/tier")
+	public String callTier(@RequestParam("region") String region,@RequestParam("name") String name) {
+		return region+","+name;
+	}
+	//borad?page=1pageSize=10&writer=현상원
+	@GetMapping("/borad")
+	public int callBorad(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize, @RequestParam("writer") String writer) {
+		System.out.println("현재 페이지"+page);
+		System.out.println("페이지 크기"+pageSize);
+		System.out.println("작성자"+writer);
+		return 0; 
+	}
+	@GetMapping("/emp/name/count")
+	public int callName (@RequestParam("serch") String serch) {
+		System.out.println(serch);
+		return empservice.getCountName(serch);
 	}
 }

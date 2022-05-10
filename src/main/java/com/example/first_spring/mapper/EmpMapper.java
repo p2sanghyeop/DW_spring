@@ -24,4 +24,6 @@ public interface EmpMapper {
 	public int insertEmp(EmpVO empVO);//insert
 	public int deleteEmp(int empNo);//delete
 	public int updateEmp(EmpVO empVO);//update
+	public EmpVO selectDeptNo();
+	public int countName(String serch);
 }

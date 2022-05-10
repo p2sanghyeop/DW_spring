@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,8 +79,14 @@ public class EmpService {
 		return empmapper.getJob(jobName);
 	}
 	@Transactional(rollbackFor = {Exception.class})
-	public int setEmp(EmpVO empVO) {
-		int rows = empmapper.insertEmp(empVO);//몇행 insert 되었는지 리턴
+	public int setEmp(EmpVO vo) {
+		//emp에 없는 부서번호를 찾아서 해당 부서 번호로 insert 되었는지 리턴
+		EmpVO empVO = empmapper.selectDeptNo();
+		int deptNo = empVO.getDeptno();
+		vo.setDeptno(deptNo);
+		
+		//1.insert 해야 함
+		int rows = empmapper.insertEmp(vo);//몇행 insert 되었는지 리턴
 		return rows;
 	}
 	@Transactional(rollbackFor = {Exception.class})
@@ -95,5 +102,8 @@ public class EmpService {
 //		String name = user.getName();
 //		System.out.println(name);
 		return rows;
+	}
+	public int getCountName(String serch) {
+		return empmapper.countName(serch);
 	}
 }

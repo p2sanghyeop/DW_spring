@@ -7,7 +7,8 @@ public class EmpVO extends DeptVO {
 	private int empno;
 	private String ename;
 	private String job;
+	private int mgr;
 	private String hiredate;
-	private int comm;
 	private int sal;
+	private int comm;
 }

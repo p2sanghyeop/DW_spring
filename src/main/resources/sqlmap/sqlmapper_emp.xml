@@ -91,6 +91,14 @@
 	where job = #{jobName}
 	limit 1
 	</select>
+	<select id="selectDeptNo" resultType="EmpVO">
+		SELECT 
+			d.DEPTNO 
+		FROM emp as e
+		RIGHT JOIN dept as d 
+		ON e.DEPTNO = d.DEPTNO 
+		WHERE e.EMPNO  is null 
+	</select>
 	<!-- oracle은 mybatis insert 할때  PK 문법이 다름(시퀀스를 추가해야 함) -->
 	<insert id="insertEmp">
 	insert into emp
@@ -110,6 +118,9 @@
 	</insert>
 	<delete id="deleteEmp">
 	delete from emp
+	(select *
+	from emp
+	where sal>=3000)
 	where empno = #{empno}
 	</delete>
 	<update id="updateEmp">
@@ -118,4 +129,10 @@
 		comm = #{comm}
 	where empno = #{empno}
 	</update>
+	<select id="countName" resultType="int">
+	select 
+		count(ename)
+	from emp
+	where ENAME like CONCAT(#{serch}, '%')
+	</select>
 </mapper>
