@@ -89,6 +89,14 @@ public class EmpController {
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
 	}
+	@PatchMapping("/emp/empnumber/{empno}")
+	public int callEmpSalJobUpdate(@PathVariable("empno")int empno, @RequestBody EmpVO empVO) {
+		return empservice.getEmpUpdateCount(empVO, empno);
+	}
+	@PatchMapping("/emp/empno/number/{empno}")
+	public int CallEmpSalUpdate(@PathVariable("empno")int empno) {
+		return empservice.getUpdateSalCount(empno);
+	}
 	//쿼리스트링으로 getmapping
 	//tier?region=kr
 	//검색할때 많이 사용
@@ -108,5 +116,13 @@ public class EmpController {
 	public int callName (@RequestParam("serch") String serch) {
 		System.out.println(serch);
 		return empservice.getCountName(serch);
+	}
+	@GetMapping("/emp/mgr/{isMgr}")
+	public List<EmpVO> callMgrList(@PathVariable("isMgr")String isMgr){
+		return empservice.getEmpIsMgrList(isMgr);
+	}
+	@GetMapping("/emp/number/{empno}")
+	public EmpVO callnumber(@PathVariable("empno")int empno) {
+		return null;
 	}
 }

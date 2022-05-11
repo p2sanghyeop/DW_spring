@@ -79,24 +79,32 @@ public class EmpService {
 		return empmapper.getJob(jobName);
 	}
 	@Transactional(rollbackFor = {Exception.class})
-	public int setEmp(EmpVO vo) {
+	public int setEmp(EmpVO empVO) {
 		//emp에 없는 부서번호를 찾아서 해당 부서 번호로 insert 되었는지 리턴
-		EmpVO empVO = empmapper.selectDeptNo();
-		int deptNo = empVO.getDeptno();
-		vo.setDeptno(deptNo);
+//		EmpVO empVO = empmapper.selectDeptNo();
+//		int deptNo = empVO.getDeptno();
+//		vo.setDeptno(deptNo);
 		
 		//1.insert 해야 함
-		int rows = empmapper.insertEmp(vo);//몇행 insert 되었는지 리턴
+		int rows = empmapper.insertEmp(empVO);//몇행 insert 되었는지 리턴
 		return rows;
 	}
 	@Transactional(rollbackFor = {Exception.class})
 	public int getEmpRemoveCount(int empNo) {
+		
+//		List<EmpVO> list = empmapper.getEmpList();
+//		for(int i=0; i<list.size(); ++i) {
+////			EmpVO vo = list.get(i);
+//			if(list.get(i).getSal()< 3000 && list.get(i).getEmpno() == empNo) {
+//				return 0;
+//			}
+//		}
 		int rows = empmapper.deleteEmp(empNo);//몇행 delete 되었는지 리턴
 		return rows;
 	}
 	
 	@Transactional(rollbackFor = {Exception.class})
-	public int getEmpUpdateCount(EmpVO vo) {
+	public int getEmpUpdateCount(EmpVO vo) {		
 		int rows = empmapper.updateEmp(vo);//몇행 update 되었는지 리턴
 //		UserVO user = null;
 //		String name = user.getName();
@@ -105,5 +113,31 @@ public class EmpService {
 	}
 	public int getCountName(String serch) {
 		return empmapper.countName(serch);
+	}
+	public List<EmpVO> getEmpIsMgrList(String isMgr){
+		return empmapper.selectEmpMgr(isMgr);
+	}
+	public EmpVO getNumberList(int empno) {
+		List<EmpVO> list = empmapper.getEmpList();
+		
+		
+		return empmapper.getNumber(empno);
+	}
+	public int getEmpUpdateCount(EmpVO vo, int empNo) {
+		vo.setEmpno(empNo);
+		return empmapper.updateEmpJobSal(vo);
+	}
+	public int getUpdateSalCount(int empno) {
+		//comm이 0이거나 null이면
+		EmpVO vo = empmapper.selectEmpCommSal(empno);
+		int comm = vo.getComm();
+		if(comm ==0) {
+			int bonus = 500;
+			int sal =vo.getSal();
+			vo.setSal(sal+ bonus);
+			//update로직 추가
+			return empmapper.updateEmpSal(vo);
+		}
+		return 0;
 	}
 }

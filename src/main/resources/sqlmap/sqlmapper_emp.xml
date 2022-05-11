@@ -5,14 +5,16 @@
 		SELECT
 			empno,
 			ename,
-			job
+			job,
+			sal
 		FROM emp
 	</select>
 	<select id="getEmp" resultType="EmpVO">
-		SELECT
-			ename
-		FROM emp
-		Where empno = #{empNo}
+		select *
+		from emp e 
+		inner join dept d 
+		on e.DEPTNO = d.DEPTNO
+		where empno = #{empno}
 	</select>
 	<select id="getName" resultType="EmpVO">
 		SELECT
@@ -106,6 +108,7 @@
 		empno, 
 		ename,
 		deptno,
+		sal,
 		hiredate
 	)
 	values
@@ -113,20 +116,24 @@
 		#{empno},
 		#{ename},
 		#{deptno},
-		now()
+		#{sal},
+		#{hiredate}
 	)
 	</insert>
 	<delete id="deleteEmp">
-	delete from emp
-	(select *
-	from emp
-	where sal>=3000)
-	where empno = #{empno}
+	delete from emp 
+	where empno in (SELECT no.empno 
+		FROM (SELECT * 
+		FROM emp 
+		WHERE sal > 3000
+		 AND empno = #{empno}) as no);
+	
 	</delete>
 	<update id="updateEmp">
 	update emp
 	set
-		comm = #{comm}
+		sal = #{sal},
+		job = #{job}		
 	where empno = #{empno}
 	</update>
 	<select id="countName" resultType="int">
@@ -135,4 +142,53 @@
 	from emp
 	where ENAME like CONCAT(#{serch}, '%')
 	</select>
+	<!-- true가 파라미터로 들어오면 사수 있는 사람조회  -->
+	<!-- false가 들어오면 사수없는 사람조회 -->
+	<!-- mybatis는 boolean형이 없어서 문자로 조회해야함 -->
+	<select id="selectEmpMgr" resultType="EmpVO">
+	select
+		empno,
+		ename,
+		mgr
+	from emp
+	where 1=1
+	<if test= 'isMgr.equals("false")'>
+		and mgr is null
+	</if>
+	<if test='isMgr.equals("ture")'>
+		and mgr is not null
+	</if>
+	</select>
+	<select id="getNumber" resultType="EmpVO">
+	select
+		empno,
+		ename,
+		comm,
+		sal
+	from emp
+	where 1=1
+	<if test='empno=0 or empno =null'>
+	update emp 
+	set sal = #{sal}
+	</if>
+	</select>
+	<update id="updateEmpJobSal">
+	update emp
+	set job = #{job}
+		sal = #{sal}
+	where empno = #{empno}
+	</update>
+	<select id="selectEmpCommSal" resultType="EmpVO">
+	select
+		empno, 
+		comm,
+		sal
+	from emp
+	where empno = #{empno}
+	</select>
+	<update id="updateEmpSal">
+	update emp
+	set sal = #{sal}
+	where empno = #{empno}
+	</update>
 </mapper>

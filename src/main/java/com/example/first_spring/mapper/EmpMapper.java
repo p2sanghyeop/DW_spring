@@ -25,5 +25,10 @@ public interface EmpMapper {
 	public int deleteEmp(int empNo);//delete
 	public int updateEmp(EmpVO empVO);//update
 	public EmpVO selectDeptNo();
-	public int countName(String serch);
+	public int countName(String serch);//queryString
+	public List<EmpVO> selectEmpMgr(@Param("isMgr") String isMgr);
+	public EmpVO getNumber(@Param("empno") int empno);
+	public int updateEmpJobSal(EmpVO vo);
+	public EmpVO selectEmpCommSal(@Param("empno") int empno);
+	public int updateEmpSal(EmpVO vo);
 }
