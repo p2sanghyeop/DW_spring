@@ -131,7 +131,7 @@ public class EmpService {
 		//comm이 0이거나 null이면
 		EmpVO vo = empmapper.selectEmpCommSal(empno);
 		int comm = vo.getComm();
-		if(comm ==0) {
+		if(comm == 0) {
 			int bonus = 500;
 			int sal =vo.getSal();
 			vo.setSal(sal+ bonus);
