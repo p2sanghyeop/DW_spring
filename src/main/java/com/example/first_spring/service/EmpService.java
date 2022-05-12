@@ -2,15 +2,14 @@ package com.example.first_spring.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.first_spring.mapper.EmpMapper;
 import com.example.first_spring.vo.EmpVO;
-import com.example.first_spring.vo.UserVO;
 
 @Service
 public class EmpService {
@@ -32,6 +31,7 @@ public class EmpService {
 	public List<EmpVO> getHiredateList(){
 		return empmapper.getHiredate();
 	}
+	//업데이트 조회 동시에
 	public List<EmpVO> getSalList(String jobName, int sal){
 		if(jobName.equals("SALESMAN")) {
 			return null;
@@ -117,13 +117,7 @@ public class EmpService {
 	public List<EmpVO> getEmpIsMgrList(String isMgr){
 		return empmapper.selectEmpMgr(isMgr);
 	}
-	public EmpVO getNumberList(int empno) {
-		List<EmpVO> list = empmapper.getEmpList();
-		
-		
-		return empmapper.getNumber(empno);
-	}
-	public int getEmpUpdateCount(EmpVO vo, int empNo) {
+	public int getEmpUpdateNumber(EmpVO vo, int empNo) {
 		vo.setEmpno(empNo);
 		return empmapper.updateEmpJobSal(vo);
 	}
@@ -139,5 +133,8 @@ public class EmpService {
 			return empmapper.updateEmpSal(vo);
 		}
 		return 0;
+	}
+	public List<Map<String, Object>> getEmpMapList(){
+		return empmapper.selectEmpMapList();
 	}
 }

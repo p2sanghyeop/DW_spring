@@ -1,6 +1,7 @@
 package com.example.first_spring.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -89,10 +90,6 @@ public class EmpController {
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
 	}
-	@PatchMapping("/emp/empnumber/{empno}")
-	public int callEmpSalJobUpdate(@PathVariable("empno")int empno, @RequestBody EmpVO empVO) {
-		return empservice.getEmpUpdateCount(empVO, empno);
-	}
 	@PatchMapping("/emp/empno/number/{empno}")
 	public int CallEmpSalUpdate(@PathVariable("empno")int empno) {
 		return empservice.getUpdateSalCount(empno);
@@ -117,12 +114,17 @@ public class EmpController {
 		System.out.println(serch);
 		return empservice.getCountName(serch);
 	}
+	//mybatis if문
 	@GetMapping("/emp/mgr/{isMgr}")
 	public List<EmpVO> callMgrList(@PathVariable("isMgr")String isMgr){
 		return empservice.getEmpIsMgrList(isMgr);
 	}
 	@GetMapping("/emp/number/{empno}")
-	public EmpVO callnumber(@PathVariable("empno")int empno) {
-		return null;
+	public int callnumber(@PathVariable("empno")int empno, @RequestBody EmpVO empVO) {
+		return empservice.getEmpUpdateNumber(empVO, empno);
+	}
+	@GetMapping("emp/map/list")
+	public List<Map<String, Object>> callEmpMapList(){
+		return empservice.getEmpMapList();
 	}
 }

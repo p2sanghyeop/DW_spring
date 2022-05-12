@@ -1,3 +1,8 @@
+#제목과 버전 설정
+application:
+   version: 1.0
+   title: SangHyeop
+
 #mybatis설정
 mybatis:
    mapper-locations: classpath:/sqlmap/sqlmapper_*.xml

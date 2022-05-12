@@ -1,6 +1,7 @@
 package com.example.first_spring.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,9 +27,9 @@ public interface EmpMapper {
 	public int updateEmp(EmpVO empVO);//update
 	public EmpVO selectDeptNo();
 	public int countName(String serch);//queryString
-	public List<EmpVO> selectEmpMgr(@Param("isMgr") String isMgr);
-	public EmpVO getNumber(@Param("empno") int empno);
+	public List<EmpVO> selectEmpMgr(@Param("isMgr") String isMgr);//mybatos if문
 	public int updateEmpJobSal(EmpVO vo);
 	public EmpVO selectEmpCommSal(@Param("empno") int empno);
 	public int updateEmpSal(EmpVO vo);
+	public List<Map<String, Object>>selectEmpMapList();//map
 }

@@ -91,6 +91,7 @@
 		sal
 	from emp 
 	where job = #{jobName}
+	order by hiredate
 	limit 1
 	</select>
 	<select id="selectDeptNo" resultType="EmpVO">
@@ -159,22 +160,9 @@
 		and mgr is not null
 	</if>
 	</select>
-	<select id="getNumber" resultType="EmpVO">
-	select
-		empno,
-		ename,
-		comm,
-		sal
-	from emp
-	where 1=1
-	<if test='empno=0 or empno =null'>
-	update emp 
-	set sal = #{sal}
-	</if>
-	</select>
 	<update id="updateEmpJobSal">
 	update emp
-	set job = #{job}
+	set job = #{job},
 		sal = #{sal}
 	where empno = #{empno}
 	</update>
@@ -191,4 +179,17 @@
 	set sal = #{sal}
 	where empno = #{empno}
 	</update>
+	<select id="selectEmpMapList" resultType="map">
+	select
+		empno,
+		ename,
+		job,
+		sal,
+		e.deptno,
+		d.dname,
+		d.loc
+	from emp as e
+	inner join dept as d
+	on e.deptno = d.deptno
+	</select>
 </mapper>
