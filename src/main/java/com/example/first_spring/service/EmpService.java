@@ -36,7 +36,7 @@ public class EmpService {
 		if(jobName.equals("SALESMAN")) {
 			return null;
 		}
-		List<EmpVO> list = empmapper.getSal(jobName, sal);
+		List<EmpVO> list = empmapper.getSalComm(jobName, sal);
 		int comm = 500;
 		int rows = 0;
 		for(int i=0; i<list.size(); ++i) {
@@ -44,12 +44,15 @@ public class EmpService {
 			int sum = empComm+comm;
 			list.get(i).setComm(sum);
 			EmpVO vo = list.get(i);
-			rows += empmapper.updateEmp(vo);
+			rows += empmapper.updatecomm(vo);
 		}
 		if(rows>0) {
-			return empmapper.getSal(jobName, sal);
+			return empmapper.getSalComm(jobName, sal);
 		}
 		return null;
+	}
+	public List<EmpVO> getCountSalList(String jobName, int sal){
+		return empmapper.getSal(jobName, sal);
 	}
 	public List<EmpVO> getOverSalList(int sal){
 		return empmapper.getOverSal(sal);
@@ -136,5 +139,10 @@ public class EmpService {
 	}
 	public List<Map<String, Object>> getEmpMapList(){
 		return empmapper.selectEmpMapList();
+	}
+	//api update
+	public int getApi(int empno, EmpVO vo) {
+		vo.setEmpno(empno);
+		return empmapper.updateEmpJobSal(vo);
 	}
 }

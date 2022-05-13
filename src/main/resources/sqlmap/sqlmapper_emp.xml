@@ -3,10 +3,7 @@
 <mapper namespace="com.example.first_spring.mapper.EmpMapper">
 	<select id="getEmpList" resultType="EmpVO">
 		SELECT
-			empno,
-			ename,
-			job,
-			sal
+			*
 		FROM emp
 	</select>
 	<select id="getEmp" resultType="EmpVO">
@@ -40,6 +37,20 @@
 		
 	</select>
 	<select id="getSal" resultType="EmpVO">
+	<![CDATA[
+		select
+			empno,
+			ename,
+			job,
+			comm
+		from emp
+		where 
+			job = #{jobName} 
+		and 
+			sal >= #{sal}
+		]]>
+	</select>
+	<select id="getSalComm" resultType="EmpVO">
 	<![CDATA[
 		select
 			empno,
@@ -110,6 +121,7 @@
 		ename,
 		deptno,
 		sal,
+		job,
 		hiredate
 	)
 	values
@@ -118,23 +130,30 @@
 		#{ename},
 		#{deptno},
 		#{sal},
+		#{job},
 		#{hiredate}
 	)
 	</insert>
 	<delete id="deleteEmp">
 	delete from emp 
-	where empno in (SELECT no.empno 
+	where empno = #{empno} 
+	</delete>
+	<!--in (SELECT no.empno 
 		FROM (SELECT * 
 		FROM emp 
 		WHERE sal > 3000
-		 AND empno = #{empno}) as no);
-	
-	</delete>
+		 AND empno = #{empno}) as no);  -->
+	<update id="updatecomm">
+	update emp
+	set
+		comm = #{comm}		
+	where empno = #{empno}
+	</update>
 	<update id="updateEmp">
 	update emp
 	set
 		sal = #{sal},
-		job = #{job}		
+		comm = #{comm}		
 	where empno = #{empno}
 	</update>
 	<select id="countName" resultType="int">

@@ -17,6 +17,7 @@ public interface EmpMapper {
 	public List<EmpVO> getComm();
 	public List<EmpVO> getHiredate();
 	public List<EmpVO> getSal(@Param("jobName") String jobName, @Param("sal") int sal);
+	public List<EmpVO> getSalComm(@Param("jobName") String jobName, @Param("sal") int sal);
 	public List<EmpVO> getOverSal(int sal);
 	public List<EmpVO> getMgr();
 	public List<EmpVO> getOverHiredate(String year);
@@ -25,6 +26,7 @@ public interface EmpMapper {
 	public int insertEmp(EmpVO empVO);//insert
 	public int deleteEmp(int empNo);//delete
 	public int updateEmp(EmpVO empVO);//update
+	public int updatecomm(EmpVO empVO);
 	public EmpVO selectDeptNo();
 	public int countName(String serch);//queryString
 	public List<EmpVO> selectEmpMgr(@Param("isMgr") String isMgr);//mybatos if문
