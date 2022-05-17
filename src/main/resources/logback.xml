@@ -14,7 +14,7 @@
 		<appender-ref ref="STDOUT" />	
 	</root>
     
-    <logger name="com.example.first_spring.mapper" level="DEBUG" additivity="false">
+    <logger name="com.dw.board.mapper" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
     
